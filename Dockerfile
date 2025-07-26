@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 FROM python:3.9-slim
 
 WORKDIR /app
@@ -24,3 +25,29 @@ RUN pip install --no-cache-dir \
     requests
 
 CMD ["python", "main_pipeline.py", "--input", "/app/input.json", "--output", "/app/output/output.json"]
+=======
+FROM python:3.9-slim
+
+WORKDIR /app
+COPY . /app
+
+RUN apt-get update && apt-get install -y \
+    gcc g++ build-essential poppler-utils \
+    libjpeg-dev zlib1g-dev libfreetype6-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir torch==2.0.1+cpu -f https://download.pytorch.org/whl/torch_stable.html
+
+RUN pip install --no-cache-dir \
+    transformers==4.30.2 \
+    sentence-transformers==2.2.2 \
+    huggingface-hub==0.15.1 \
+    pdfplumber \
+    PyMuPDF \
+    numpy \
+    scikit-learn \
+    pillow \
+    requests
+
+CMD ["python", "main_pipeline.py", "--input", "/app/input.json", "--output", "/app/output/output.json"]
+>>>>>>> 444671027836fcd32718b71f681fded2782fa008
