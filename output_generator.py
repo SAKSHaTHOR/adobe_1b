@@ -1,6 +1,6 @@
-#!/usr/bin/env python3
+
 """
-Generates structured JSON output for Round 1B challenge
+Generates structured JSON output 
 """
 
 from typing import List, Dict, Any

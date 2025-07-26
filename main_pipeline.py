@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 import json, time, argparse
 from pathlib import Path
 from typing import List, Dict, Any
@@ -75,7 +75,7 @@ def main():
 
     with open(args.output, 'w', encoding='utf-8') as f:
         json.dump(result, f, indent=2, ensure_ascii=False)
-    print(f"✅ Done: {args.output}")
+    print(f"Done: {args.output}")
 
 if __name__ == "__main__":
     main()

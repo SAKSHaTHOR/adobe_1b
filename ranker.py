@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 """
 Ranks sections and subsections based on semantic similarity using sentence-transformers
 """
@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 class ContentRanker:
     def __init__(self, model_path: str = "./local_model"):
-        logger.info(f"🔄 Loading model from: {model_path}")
+        logger.info(f"Loading model from: {model_path}")
         self.model = SentenceTransformer(model_path)
         self.model_name = model_path
         self.embedding_cache = {}
@@ -22,7 +22,7 @@ class ContentRanker:
         if not sections:
             return []
 
-        logger.info(f"🧠 Ranking {len(sections)} sections for query: {query}")
+        logger.info(f"Ranking {len(sections)} sections for query: {query}")
         section_texts = [f"{s.get('title', '')}. {s.get('content', '')}" for s in sections]
 
         try:
@@ -42,15 +42,14 @@ class ContentRanker:
             for i, s in enumerate(ranked[:top_k]):
                 s['relevance_rank'] = i + 1
 
-            logger.info("📈 Top similarity scores:")
+            logger.info("Top similarity scores:")
             for s in ranked[:3]:
                 logger.info(f" - {s['title']} ({s['similarity_score']:.4f})")
 
             return ranked[:top_k]
 
         except Exception as e:
-            logger.error(f"⚠️ Embedding failed: {str(e)}")
-            # fallback to dummy ranking
+            logger.error(f"Embedding failed: {str(e)}")
             for i, s in enumerate(sections[:top_k]):
                 s['similarity_score'] = 1.0 - i * 0.1
                 s['relevance_rank'] = i + 1
